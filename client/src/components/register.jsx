@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import Login from "./login";
 import SignUp from "./signup";
 import Home from "./home";
-function App(){
+
+
+function Register(){
+
+  
     const [islogin,setIslogin]=useState(true);
     const [isLoggedIn, setLoggedIn] = useState(false);
 
@@ -12,6 +16,8 @@ function App(){
       function toggleAuthType(){
         setIslogin((prevIsLogin) => !prevIsLogin);
       };
+
+
     return (<div>
         {isLoggedIn ? (
         <Home />
@@ -23,4 +29,4 @@ function App(){
     </div>);
 };
 
-export default App;
+export default Register;

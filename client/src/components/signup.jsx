@@ -2,9 +2,11 @@ import React, { useState  } from "react";
 import { useNavigate } from "react-router-dom"; 
 import "./signup.css";
 import md5 from "md5";
+import Home from "./home";
 
 
 function SignUp() {
+    console.log("YASH MC!")
     const [isRegistered, setRegistered] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -33,8 +35,13 @@ function SignUp() {
         }
     }
 
-    if (isRegistered) {
-        navigate("/home.jsx");
+    try {
+        if (isRegistered) {
+            // navigate("/home.jsx");
+            return <Home/>;
+        }
+    } catch (error) {
+        console.error('Error navigating', error);
     }
 
     return (

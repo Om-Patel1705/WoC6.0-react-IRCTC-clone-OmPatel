@@ -3,7 +3,7 @@ import "./home.css";
 import imageSrc from './Irctc.jpg';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import imageS from './download.jpg';
+import { isSameDay } from 'date-fns';
 import trainRoutes from "./trains.json";
 
 function Home(){
@@ -13,20 +13,34 @@ function Home(){
   const [searchResults, setSearchResults] = useState([]);
 
   function handleSearch(){
-    // Fetch data based on source, destination, and date
-    const formattedDate = date.toISOString().split('T')[0];
+    
 
     // Filter train routes based on user inputs
     const results = trainRoutes.trainRoutes.filter(route =>
       route.source.toLowerCase() === source.toLowerCase() &&
       route.destination.toLowerCase() === destination.toLowerCase() &&
-      route.date === formattedDate
+      isSameDay(new Date(route.date), date)
     );
 
+  
     // Update search results state
     setSearchResults(results);
     console.log(results);
   };
+
+  function handleSource(e){
+      
+    setSource(e.target.value);
+ 
+
+  }
+  function handleDestination(e){
+    
+    setDestination(e.target.value);
+ 
+
+  }
+
   return (
   <div>
     
@@ -48,13 +62,13 @@ function Home(){
     <h1>Start Your Journey</h1>
     <label>From:</label>
     <br />
-    <input type='text' placeholder='Your Location'></input>
+    <input type='text' placeholder='Your Location' value={source} onChange={handleSource}></input>
     <br />
     <br />
-    <br />
+    <br /> 
     <label>To :</label>
     <br />
-    <input type='text' placeholder='Destination'></input>
+    <input type='text' placeholder='Destination' value={destination} onChange={handleDestination}></input>
     <br />
   </div>
   <div>

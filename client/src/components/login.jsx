@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import Home from "./home";
 import SignUp from './signup';
-import Home from './home';
+import { useNavigate } from "react-router-dom"; 
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [redirectToSignUp, setRedirectToSignUp] = useState(false);
+  const navigate = useNavigate(); 
+
 
   function handleLogin() {
     if (username && password) {
@@ -17,7 +20,7 @@ const Login = () => {
   }
 
   if (isLoggedIn) {
-    return <Home />;
+     return <Home/>;
   }
 
   function handleSignup() {
@@ -27,7 +30,7 @@ const Login = () => {
   }
 
   if (redirectToSignUp) {
-    return <SignUp />;
+    return <SignUp/>;
   }
 
   return (
