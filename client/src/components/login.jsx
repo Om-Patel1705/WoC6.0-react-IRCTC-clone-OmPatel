@@ -1,36 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import Home from "./home";
-import SignUp from './signup';
-import { useNavigate } from "react-router-dom"; 
+import SignUp from "./signup";
+import md5 from "md5";
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [redirectToSignUp, setRedirectToSignUp] = useState(false);
-  const navigate = useNavigate(); 
 
+  async function handleLogin() {
+    try {
+      const response = await fetch("http://localhost:8000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
 
-  function handleLogin() {
-    if (username && password) {
-      setIsLoggedIn(true);
-    } else {
-      alert('Please enter all required information');
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Authentication successful:", data.message);
+        setIsLoggedIn(true);
+      } else {
+        console.error("Authentication failed:", data.message);
+        alert("Check your password or username or signup");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
     }
   }
 
   if (isLoggedIn) {
-     return <Home/>;
+    return <Home />;
   }
 
   function handleSignup() {
-
-    
     setRedirectToSignUp(true);
   }
 
   if (redirectToSignUp) {
-    return <SignUp/>;
+    return <SignUp />;
   }
 
   return (
@@ -38,11 +50,19 @@ const Login = () => {
       <form>
         <div>
           <label>Username:</label>
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
         </div>
         <div>
           <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
         <button type="button" onClick={handleLogin}>
           Login

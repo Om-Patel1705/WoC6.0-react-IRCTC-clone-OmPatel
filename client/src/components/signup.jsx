@@ -15,7 +15,7 @@ function SignUp() {
 
     async function handlechange() {
         if (username && password && email) {
-            const temp = md5(password);
+           
             try {
                 await fetch('http://localhost:8000/signup', {
                     method: 'POST',
@@ -23,7 +23,7 @@ function SignUp() {
                         'Content-Type': 'application/json',
                     },
                     
-                    body: JSON.stringify({ username, email, password: temp }),
+                    body: JSON.stringify({ username, email, password }),
                 });
                 setRegistered(true);
             } catch (error) {
