@@ -1,65 +1,79 @@
-import React, { useState  } from "react";
+import React, { useState } from "react";
 
 import "./signup.css";
+import { useNavigate } from "react-router-dom";
 
-import Home from "./home";
 
+// import "bootstrap/dist/css/bootstrap.css";
+import { Button, Card } from "react-bootstrap";
 
 function SignUp() {
-    
-    const [isRegistered, setRegistered] = useState(false);
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
+  const [isRegistered, setRegistered] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
 
+  async function handlechange() {
+    if (username && password && email) {
+      try {
+        await fetch("http://localhost:8000/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
 
-    async function handlechange() {
-        if (username && password && email) {
-           
-            try {
-                await fetch('http://localhost:8000/signup', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    
-                    body: JSON.stringify({ username, email, password }),
-                });
-                setRegistered(true);
-            } catch (error) {
-                console.error('Error posting data', error);
-                alert('Error signing up');
-            }
-        } else {
-            alert('Please enter all required information');
-        }
-    }   
-
-    try {
-        if (isRegistered) {
-            // navigate("/home.jsx");
-            return <Home log={username}/>;
-        }
-    } catch (error) {
-        console.error('Error navigating', error);
+          body: JSON.stringify({ username, email, password }),
+        });
+        setRegistered(true);
+      } catch (error) {
+        console.error("Error posting data", error);
+        alert("Error signing up");
+      }
+    } else {
+      alert("Please enter all required information");
     }
+  }
 
-    return (
-        <div className="container">
-            <label>Email: </label>
-            <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-            <br />
-            <label>Username: </label>
-            <input type='text' value={username} onChange={(e) => setUsername(e.target.value)} />
-            <br />
-            <label>Password: </label>
-            <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
-            <br />
-            <button onClick={handlechange}>Sign up</button>
-            <br />
-            <br />
-        </div>
-    );
+  try {
+    if (isRegistered) {
+      navigate("/home");
+    }
+  } catch (error) {
+    console.error("Error navigating", error);
+  }
+
+  return (
+    <>
+      <Card className="container signup">
+        <label>Email: </label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <br />
+        <label>Username: </label>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <br />
+        <label>Password: </label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <br />
+        <Button onClick={handlechange}>Sign up</Button>
+
+        <br />
+        <br />
+      </Card>
+    </>
+  );
 }
 
 export default SignUp;

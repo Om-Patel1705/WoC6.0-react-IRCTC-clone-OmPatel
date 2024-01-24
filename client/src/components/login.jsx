@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import SignUp from './signup';
-import Home from './home';
+import React, { useState } from "react";
+import SignUp from "./signup";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [redirectToSignUp, setRedirectToSignUp] = useState(false);
-  const [whoLogin, setWhoLog] = useState("");
+ 
+  const navigate = useNavigate();
 
   async function handleLogin() {
     try {
@@ -23,8 +23,11 @@ const Login = () => {
 
       if (response.ok) {
         console.log("Authentication successful:", data.message);
-         setWhoLog(username);
-        setIsLoggedIn(true);
+       
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", data.username);
+
+        navigate("/home");
       } else {
         console.error("Authentication failed:", data.message);
         alert("Check your password or username or signup");
@@ -34,10 +37,7 @@ const Login = () => {
     }
   }
 
-  if (isLoggedIn) {
-     return <Home log={whoLogin}/>;
-  }
-
+  
   function handleSignup() {
     setRedirectToSignUp(true);
   }
@@ -79,4 +79,4 @@ const Login = () => {
   );
 };
 
-export default  Login ; // Exporting Login component and whoLoggedin state
+export default Login; // Exporting Login component and whoLoggedin state

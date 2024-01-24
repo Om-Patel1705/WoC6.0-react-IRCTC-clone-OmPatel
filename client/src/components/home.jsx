@@ -1,23 +1,26 @@
 import React, { useState } from "react";
 import "./home.css";
-import imageSrc from "./Irctc.jpg";
+import imageSrc from "./trainphoto.jpg";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import PayDetails from "./payDetails";
+import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
 
-function Home({log}) {
+function Home() {
+  const name = localStorage.getItem("username");
   const [date, setDate] = useState(new Date());
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
   const [trainid, settrainid] = useState();
+  const [notfound, setNotfound] = useState(false);
+  const navigate = useNavigate();
+
   function handleShowPaymentDetails(tid) {
     setShowPaymentDetails(true);
     settrainid(tid);
   }
-
-
 
   async function handleSearch() {
     try {
@@ -35,6 +38,8 @@ function Home({log}) {
         const results = await clonedResponse.json();
         console.log(results.data);
         setSearchResults(results.data || []);
+
+        if (searchResults.length === 0) setNotfound(true);
       } else {
         console.log("Error in fetching data");
       }
@@ -45,33 +50,44 @@ function Home({log}) {
 
   return (
     <div>
-      <div class="container">
-        <ul class="nav nav-pills">
-          <li class="nav-item">એ હાલો....</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link active" aria-current="page">
+      <div className="container">
+        <ul className="nav nav-pills">
+          <li className="nav-item" key={1}>
+            <a href="#" className="nav-link active" aria-current="page">
               Home
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          <li className="nav-item" key={2}>
+            <a href="#" className="nav-link">
               Booklist
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          <li className="nav-item" key={3}>
+            <a href="#" className="nav-link">
               About Us
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              {log}
+          <li className="nav-item" key={4}>
+            <a href="#" className="nav-link">
+              {name}
+            </a>
+          </li>
+          <li className="nav-item" key={5}>
+            <a
+              onClick={() => {
+                localStorage.removeItem("token");
+                localStorage.removeItem("username");
+              }}
+              href="/home"
+              className="nav-link"
+            >
+              LogOut
             </a>
           </li>
         </ul>
       </div>
-      <div class="welcome">
-        <h1>Welcome,</h1>
+      <div className="welcome">
+        <h1>Welcome</h1>
         <p>
           Revolutionize your travel experience with our train travel
           website,offering seamless booking,real-time updates,and current
@@ -81,37 +97,35 @@ function Home({log}) {
         <img src={imageSrc} alt="Description of the image" />
       </div>
       <div>
-        <h1>Start Your Journey</h1>
-        <label>From:</label>
+        <h1 style={{ marginBottom: 0 + "px" }}>Select Your Journey</h1>
+
         <br />
-        <input
-          type="text"
-          placeholder="Your Location"
-          value={source}
-          onChange={(e) => setSource(e.target.value)}
-        ></input>
-        <br />
-        <br />
-        <br />
-        <label>To :</label>
-        <br />
-        <input
-          type="text"
-          placeholder="Destination"
-          value={destination}
-          onChange={(e) => setDestination(e.target.value)}
-        ></input>
+        <div className="from-to">
+          <label>From:</label>
+          <input
+            type="text"
+            placeholder="Your Location"
+            value={source}
+            onChange={(e) => setSource(e.target.value)}
+          ></input>
+          <br />
+          <br />
+          <br />
+          <label>To :</label>
+          <br />
+          <input
+            type="text"
+            placeholder="Destination"
+            value={destination}
+            onChange={(e) => setDestination(e.target.value)}
+          ></input>
+        </div>
+
         <br />
       </div>
       <div>
-        <h2>Date</h2>
-        <DatePicker
-          selected={date}
-          onChange={(date) => setDate(date)}
-          
-         
-          
-        />
+        <h2 style={{ marginTop: 0 + "px" }}>Date</h2>
+        <DatePicker selected={date} onChange={(date) => setDate(date)} />
       </div>
       <br />
       <div>
@@ -141,36 +155,41 @@ function Home({log}) {
         </select>
       </div>
       <br />
-      <button onClick={handleSearch}>SEARCH</button>
+      <button className="search" onClick={handleSearch}>
+        SEARCH
+      </button>
       {searchResults.length > 0 && (
         <div>
           <h2>Search Results</h2>
           <ul>
             {searchResults.map((result) => (
               <div>
-                <li key={result.trainnumber}>
+                <li key={result.tid}>
                   Train Number: {result.trainnumber}, Source: {result.source},
                   Destination: {result.destination}
+                  <br />
+                  <button onClick={() => handleShowPaymentDetails(result.tid)}>
+                    Book
+                  </button>
                 </li>
-                <button onClick={() => handleShowPaymentDetails(result.tid)}>
-                  Book
-                </button>
               </div>
             ))}
           </ul>
         </div>
       )}
-      {showPaymentDetails && <PayDetails tid={trainid} log={log} />}
+
+      {searchResults.length === 0 && notfound && <h3>Not found😕</h3>}
+      {showPaymentDetails && <PayDetails tid={trainid} log={name} />}
       <br />
       <br />
       <div>
         <p>Our Expertise</p>
         <div>
-          <h2>User-friendly Interface</h2>
+          <h2>-friendly Interface</h2>
           <p>
-            Our app boasts an incredibly intuitive and user-friendly interface,
+            Our app boasts an incredibly intuitive and -friendly interface,
             ensuring that the process of searching,selecting and booking train
-            tickets is a breeze. With a clean and organized designs,users can
+            tickets is a breeze. With a clean and organized designs,s can
             navigate effortlessly,making their booking experience enjoyable and
             efficient.
           </p>
@@ -179,10 +198,10 @@ function Home({log}) {
           <h2>Extensive Train Options</h2>
           <p>
             Gain access to an extensive database of train schedules and
-            routes,providing users with a comprehensive list of options.Our
-            app's advanced filtering and sorting features empower users to
-            quickly find the most suitable trains based on their
-            preference,ensuring a tailored and convenient experience.
+            routes,providing s with a comprehensive list of options.Our app's
+            advanced filtering and sorting features empower s to quickly find
+            the most suitable trains based on their preference,ensuring a
+            tailored and convenient experience.
           </p>
         </div>
         <div>
@@ -190,17 +209,17 @@ function Home({log}) {
           <p>
             Stay informed by real-time updates on seat availability and ticket
             status. Recieve instant confirmation for booked tickets, eliminating
-            any uncertainty and allowing users to plan their journey with
+            any uncertainty and allowing s to plan their journey with
             confidence.
           </p>
         </div>
         <div>
-          <h2>Personalized User Account</h2>
+          <h2>Personalized Account</h2>
           <p>
-            Enjoy the benefits of a Personalized user account,allowing for quick
-            and efficient booking. Save preference,access booking history, and
+            Enjoy the benefits of a Personalized account,allowing for quick and
+            efficient booking. Save preference,access booking history, and
             tailor the app to individual needs,providing a seamlessm and
-            Personalized experience for every user.
+            Personalized experience for every .
           </p>
         </div>
       </div>

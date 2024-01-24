@@ -3,7 +3,7 @@ const pool = require("./db");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const md5 = require("md5");
-
+const jwt = require("jsonwebtoken");
 
 const port = 8000;
 const app = express();
@@ -29,16 +29,20 @@ app.post("/signup", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const hashedPassword = md5(password);
-  
 
   try {
     const result = await pool.query(
       "SELECT * FROM user_data WHERE username = $1",
       [username]
     );
+
     console.log(result.rows);
     if (result.rows[0].password === hashedPassword) {
-      res.status(200).json({ success: true, message: "Login successful" });
+      const token = jwt.sign({ username }, "YASH MC!!", { expiresIn: "10" });
+
+      res
+        .status(200)
+        .json({ success: true, message: "Login successful", token, username });
     } else {
       res
         .status(401)
@@ -51,21 +55,20 @@ app.post("/login", async (req, res) => {
 });
 app.post("/search", async (req, res) => {
   var { source, destination, date } = req.body;
-var tdate;
-  if(date!=null  )  tdate = date.substring(0,10); 
- 
-  
+  var tdate;
+  if (date != null) tdate = date.substring(0, 10);
+
   try {
-    console.log(tdate)
+    console.log(tdate);
     const result = await pool.query(
       "SELECT * FROM trains WHERE source = $1 AND destination = $2 AND date = $3",
       [source, destination, tdate]
     );
-  
+
     if (result.rows.length > 0) {
       const to = result.rows;
       console.log(result.rows);
-      res.json({data:to});
+      res.json({ data: to });
     } else {
       res.json({}); // or handle the case when no results are found
     }
@@ -73,7 +76,6 @@ var tdate;
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
   }
-  
 });
 
 app.get("/test", async (req, res) => {
@@ -84,22 +86,34 @@ app.get("/test", async (req, res) => {
   res.json(result.rows);
 });
 
-
-
 app.post("/book", async (req, res) => {
-  const { tid,log } = req.body;
+  const { tid, log } = req.body;
   try {
-   
     console.log(log);
-    await pool.query(
-      "INSERT INTO book VALUES ($1, $2)",
-      [log,tid]
-    );
+    await pool.query("INSERT INTO book VALUES ($1, $2)", [log, tid]);
     res.status(200).json({ success: true });
   } catch (err) {
     console.error(err);
   }
 });
 
+app.post("/booklist", async (req, res) => {
+  const { username } = req.body;
+
+  try {
+    const result = await pool.query(
+      "SELECT * FROM book AS b JOIN trains AS t ON b.tid=t.tid"
+    );
+    if (result.rows.length > 0) {
+      const to = result.rows;
+      console.log(result.rows);
+      res.json({ data: to });
+    } else {
+      res.json({});
+    }
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 app.listen(port, () => console.log(`Server running on port ${port}`));
- 
