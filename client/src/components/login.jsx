@@ -7,8 +7,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [redirectToSignUp, setRedirectToSignUp] = useState(false);
-  const navigate = useNavigate(); 
-
+  const [whoLogin, setWhoLog] = useState("");
 
   async function handleLogin() {
     try {
@@ -24,6 +23,7 @@ const Login = () => {
 
       if (response.ok) {
         console.log("Authentication successful:", data.message);
+         setWhoLog(username);
         setIsLoggedIn(true);
       } else {
         console.error("Authentication failed:", data.message);
@@ -35,7 +35,7 @@ const Login = () => {
   }
 
   if (isLoggedIn) {
-     return <Home/>;
+     return <Home log={whoLogin}/>;
   }
 
   function handleSignup() {
@@ -43,7 +43,7 @@ const Login = () => {
   }
 
   if (redirectToSignUp) {
-    return <SignUp/>;
+    return <SignUp />;
   }
 
   return (
@@ -79,4 +79,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default  Login ; // Exporting Login component and whoLoggedin state

@@ -1,17 +1,17 @@
 import React, { useState  } from "react";
-import { useNavigate } from "react-router-dom"; 
+
 import "./signup.css";
-import md5 from "md5";
+
 import Home from "./home";
 
 
 function SignUp() {
-    console.log("YASH MC!")
+    
     const [isRegistered, setRegistered] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const navigate = useNavigate(); 
+
 
     async function handlechange() {
         if (username && password && email) {
@@ -33,12 +33,12 @@ function SignUp() {
         } else {
             alert('Please enter all required information');
         }
-    }
+    }   
 
     try {
         if (isRegistered) {
             // navigate("/home.jsx");
-            return <Home/>;
+            return <Home log={username}/>;
         }
     } catch (error) {
         console.error('Error navigating', error);
