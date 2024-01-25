@@ -102,7 +102,7 @@ app.post("/booklist", async (req, res) => {
 
   try {
     const result = await pool.query(
-      "SELECT * FROM book AS b JOIN trains AS t ON b.tid=t.tid"
+      `SELECT * FROM book AS b JOIN trains AS t ON b.tid=t.tid WHERE b.username=${username}`
     );
     if (result.rows.length > 0) {
       const to = result.rows;
