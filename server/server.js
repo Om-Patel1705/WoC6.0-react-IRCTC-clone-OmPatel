@@ -116,5 +116,33 @@ app.post("/booklist", async (req, res) => {
     // console.error(err);
   }
 });
+app.post("/cancel", async (req, res) => {
+  const { username,tid } = req.body;
+  
+   
+
+    try{
+         await pool.query(`DELETE FROM book WHERE bookid=${tid}`);
+        console.log(tid);
+
+        const result = await pool.query(
+          `SELECT * FROM book AS b JOIN trains AS t ON b.tid=t.tid WHERE b.username='${username}'`
+        );
+        if (result.rows.length > 0) {
+          const to = result.rows;
+         
+          res.json({ data: to });
+        } else {
+          res.json({});
+        }
+
+    }
+    catch(err){
+      console.log(err);
+
+    }
+});
+
+
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

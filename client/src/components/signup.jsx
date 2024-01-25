@@ -26,6 +26,8 @@ function SignUp() {
           body: JSON.stringify({ username, email, password }),
         });
         setRegistered(true);
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
       } catch (error) {
         console.error("Error posting data", error);
         alert("Error signing up");

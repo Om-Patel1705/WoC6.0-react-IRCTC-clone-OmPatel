@@ -15,52 +15,91 @@ async function fetchBookList(username) {
 
 function Booklist() {
   const [bookList, setBookList] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isEmpty, setIsempty] = useState(true);
 
+  async function cancelTicket(tid) {
+    try {
+      const username = localStorage.getItem("username");
+
+      const response = await fetch("http://localhost:8000/cancel", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, tid }),
+      });
+
+      const updatedList = await response.json();
+
+      if (updatedList.data == null) {
+        setIsempty(true);
+        setBookList(updatedList.data);
+      } else {
+        setIsempty(false);
+        setBookList(updatedList.data);
+      }
+      
+    } catch (err) {
+      console.error(err);
+    }
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const username = localStorage.getItem('username');
+        const username = localStorage.getItem("username");
         const data = await fetchBookList(username);
-        setBookList(data);
-       
+
+        
+        if (data == null) {
+          setIsempty(true);
+        } else {
+          setIsempty(false);
+          setBookList(data);
+        }
+
       } catch (error) {
         console.error("Error fetching book list:", error);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchData();
-
-    
   }, []); // Empty dependency array means this effect runs once on mount
+
   return (
     <div>
-      {  (
-        <ul>
-          {bookList.map((book, index) => (
-            <li key={index}><ul>
-              <li>Username: {book.username}</li>
-              <li>Date: {book.date}</li>
-              <li>Trainnumber: {book.trainnumber}</li>
-              <li>Source: {book.source}</li>
-              <li>Destination: {book.destination}</li>
-              <li> Departuretime: {book. departuretime}</li>
-              <li> Arrivaltime: {book. arrivaltime}</li>
-            </ul>
-            <br/>
-          <br/></li>
-
-          
-          ))}
-
-         
-        </ul>
-      )}
-
-     
-     
+     { isEmpty==false && (
+      <div>
+        {
+          <ul>
+            {bookList.map((book, index) => (
+              <li key={index}>
+                <ul>
+                  <li>Username: {book.username}</li>
+                  <li>Date: {book.date}</li>
+                  <li>Trainnumber: {book.trainnumber}</li>
+                  <li>Source: {book.source}</li>
+                  <li>Destination: {book.destination}</li>
+                  <li> Departuretime: {book.departuretime}</li>
+                  <li> Arrivaltime: {book.arrivaltime}</li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        cancelTicket(book.bookid);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </li>
+                </ul>
+                <br />
+                <br />
+              </li>
+            ))}
+          </ul>
+        }
+      </div>
+      ) }
+      {isEmpty==true && <h1>No Result</h1>}
     </div>
   );
 }
