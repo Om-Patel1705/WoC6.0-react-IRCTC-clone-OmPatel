@@ -58,7 +58,7 @@ function Home() {
             </a>
           </li>
           <li className="nav-item" key={2}>
-            <a href="#" className="nav-link">
+            <a href="/booklist" className="nav-link">
               Booklist
             </a>
           </li>

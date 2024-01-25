@@ -23,6 +23,7 @@ function Booklist() {
         const username = localStorage.getItem('username');
         const data = await fetchBookList(username);
         setBookList(data);
+       
       } catch (error) {
         console.error("Error fetching book list:", error);
       } finally {
@@ -31,19 +32,35 @@ function Booklist() {
     };
 
     fetchData();
-  }, []); // Empty dependency array means this effect runs once on mount
 
+    
+  }, []); // Empty dependency array means this effect runs once on mount
   return (
     <div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
+      {  (
         <ul>
           {bookList.map((book, index) => (
-            <li key={index}>{book}</li>
+            <li key={index}><ul>
+              <li>Username: {book.username}</li>
+              <li>Date: {book.date}</li>
+              <li>Trainnumber: {book.trainnumber}</li>
+              <li>Source: {book.source}</li>
+              <li>Destination: {book.destination}</li>
+              <li> Departuretime: {book. departuretime}</li>
+              <li> Arrivaltime: {book. arrivaltime}</li>
+            </ul>
+            <br/>
+          <br/></li>
+
+          
           ))}
+
+         
         </ul>
       )}
+
+     
+     
     </div>
   );
 }
