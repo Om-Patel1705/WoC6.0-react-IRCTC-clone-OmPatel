@@ -3,30 +3,27 @@ import Login from "./login";
 import SignUp from "./signup";
 import Home from "./home";
 
+function Register() {
+  const [islogin, setIslogin] = useState(true);
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  function handleLogin() {
+    setLoggedIn(true);
+  }
+  function toggleAuthType() {
+    setIslogin((prevIsLogin) => !prevIsLogin);
+  }
 
-function Register(){
-
-  
-    const [islogin,setIslogin]=useState(true);
-    const [isLoggedIn, setLoggedIn] = useState(false);
-
-    function handleLogin(){
-        setLoggedIn(true);
-      };
-      function toggleAuthType(){
-        setIslogin((prevIsLogin) => !prevIsLogin);
-      };
-
-
-    return (<div>
-        {isLoggedIn ? (
+  return (
+    <div>
+      {isLoggedIn ? (
         <Home />
       ) : islogin ? (
         <Login toggleAuthType={toggleAuthType} handleLogin={handleLogin} />
       ) : (
         <SignUp toggleAuthType={toggleAuthType} />
       )}
-    </div>);
-};
+    </div>
+  );
+}
 
 export default Register;

@@ -16,13 +16,15 @@ app.post("/signup", async (req, res) => {
   try {
     const hashedPassword = md5(password);
     console.log("($1, $2, $3)", [username, email, hashedPassword]);
-    await pool.query(
-      "INSERT INTO user_data (username, email, password) VALUES ($1, $2, $3)",
-      [username, email, hashedPassword]
-    );
-    res.status(200).json({ success: true });
+    // await pool.query(
+    //   "INSERT INTO user_data (username, email, password) VALUES ($1, $2, $3)",
+    //   [username, email, hashedPassword]
+    // );
+    const token = jwt.sign({ username }, "HELLOWORLD", { expiresIn: "10" });
+    res.status(200).json({ success: true , token ,username});
   } catch (err) {
     console.error(err);
+    res.status(404).json({ success: false });
   }
 });
 
@@ -38,11 +40,11 @@ app.post("/login", async (req, res) => {
 
     console.log(result.rows);
     if (result.rows[0].password === hashedPassword) {
-      const token = jwt.sign({ username }, "YASH MC!!", { expiresIn: "10" });
-
+      const token = jwt.sign({ username }, "HELLOWORLD", { expiresIn: "10" });
+const email = result.rows[0].email;
       res
         .status(200)
-        .json({ success: true, message: "Login successful", token, username });
+        .json({ success: true, message: "Login successful", token, username , email});
     } else {
       res
         .status(401)
@@ -56,7 +58,10 @@ app.post("/login", async (req, res) => {
 app.post("/search", async (req, res) => {
   var { source, destination, date } = req.body;
   var tdate;
-  if (date != null) tdate = date.substring(0, 10);
+  // if (date != null) tdate = date.substring(0, 10);
+  tdate="2023-12-31";
+  source = "Mumbai";
+  destination="Delhi";
 
   try {
     console.log(tdate);
@@ -90,6 +95,7 @@ app.post("/book", async (req, res) => {
   const { tid, log } = req.body;
   try {
     console.log(log);
+    console.log(tid);
     await pool.query("INSERT INTO book VALUES ($1, $2)", [log, tid]);
     res.status(200).json({ success: true });
   } catch (err) {

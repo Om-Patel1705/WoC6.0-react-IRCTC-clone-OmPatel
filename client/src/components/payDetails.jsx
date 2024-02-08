@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import './home.css'
 
 
 function PayDetails({ log, tid }) {
@@ -54,7 +55,7 @@ function PayDetails({ log, tid }) {
     <div>
       <h2>Payment Details</h2>
       <form>
-        <div>
+        <div className="pay">
           <label htmlFor="cardNumber">Card Number:</label>
           <input
             type="text"
@@ -64,7 +65,8 @@ function PayDetails({ log, tid }) {
             placeholder="Enter card number"
           />
         </div>
-        <div>
+        
+        <div className="pay">
           <label htmlFor="expirationMonth">Expiration Month:</label>
           <input
             type="text"
@@ -74,7 +76,7 @@ function PayDetails({ log, tid }) {
             placeholder="MM"
           />
         </div>
-        <div>
+        <div className="pay">
           <label htmlFor="expirationYear">Expiration Year:</label>
           <input
             type="text"
@@ -84,7 +86,7 @@ function PayDetails({ log, tid }) {
             placeholder="YYYY"
           />
         </div>
-        <div>
+        <div className="pay">
           <label htmlFor="cvv">CVV:</label>
           <input
             type="text"
@@ -94,7 +96,7 @@ function PayDetails({ log, tid }) {
             placeholder="Enter CVV"
           />
         </div>
-        <div>
+        <div className="pay">
           <label htmlFor="country">Country:</label>
           <input
             type="text"

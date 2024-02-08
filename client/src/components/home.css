@@ -1,51 +1,222 @@
-.container {
-  margin: 0 auto;
-  width: 100%;
-}
+  body{
+    background-color: #97e3fc34;
+    font-family: 'Oswald', sans-serif;
+  }
+  .container {
+    margin: 0 auto;
+    width: 100%;
+    
+  }
 
-.nav {
-  background-color: #5daafc; /* Set your desired background color */
-  padding: 10px;
-  border-radius: 5px;
-  flex-direction: row;
-  display: flex;
-}
+  .nav {
+    background-color: #5daafc; /* Set your desired background color */
+    padding: 10px;
+    border-radius: 5px;
+    flex-direction: row;
+    display: flex;
+  }
 
-.nav-item {
-  /* display: inline-block; */
-  margin-right: 10px;
-  display: flex;
-  justify-content: right;
-}
+  .nav-item {
+    /* display: inline-block; */
+    margin-right: 10px;
+    display: flex;
+    justify-content: right;
+  }
 
-.nav-link {
-  color: #fff; /* Set your desired text color */
-  text-decoration: none;
-  padding: 5px 10px;
-  border-radius: 3px;
-  transition: background-color 0.3s ease;
-}
+  .nav-link {
+    color: rgb(255, 255, 255); /* Set your desired text color */
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+  }
 
-.nav-link:hover {
-  background-color: #0056b3; /* Set your desired hover color */
-}
+  .nav-link:hover {
+    background-color: #0056b3; /* Set your desired hover color */
+  }
 
-.from-to {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
+  .from-to {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
 
-.from-to input {
-  margin-right: 40px;
-  margin-left: 10px;
-  box-shadow: black 1px 0.5px 3px;
-}
+  .from-to input {
+    margin-right: 40px;
+    margin-left: 10px;
+    
+  }
 
-.search{
+  .search{
 
-  height: 30px;
-  color: #fff;
-  background-color: #000;
-  border-radius: 5px;
-}
+    height: 30px;
+    color: #fff;
+    background-color: #000;
+    border: 0px;
+    border-radius: 5px;
+  }
+
+  .home{
+    background-color: #0056b3;
+  }
+
+  .bookList{
+    background-color: #0056b3;
+  }
+  .about{
+    background-color: #0056b3;
+  }
+  .profile{
+    background-color: #0056b3;
+  }
+
+  .welcome h1{
+    display: flex;
+ font-family: 'Prompt', sans-serif;
+    align-items: center;
+    justify-content: center;
+  }
+ 
+
+  input , select{
+    border-radius: 2px;
+    border:solid black 0px ;
+    background-color: #97c7fa54;
+    height: 30px;
+    padding-left: 10px;
+  }
+
+  .bookedTrains{
+    
+    margin-bottom: 20px;
+    display: flex;
+    background-color: #8bc3ff54;
+   
+    padding: 10px ;
+    border-radius: 5px;
+    list-style-type: none;
+    flex-direction: column;
+  }
+
+  .bookedTrainContainer{
+    padding: 0;
+    height: auto;
+    width: auto;
+    display: flex;
+   
+    flex-direction: column;
+    
+
+
+  }
+  p{
+    font-family: 'Oswald', sans-serif;
+  }
+
+  .cancel{
+    color: rgb(0, 0, 0);
+    background-color: rgba(247, 163, 163, 0.749);
+  
+    border-radius: 10px;
+  }
+
+  .cancel:hover{
+    color: white;
+    background-color: #f45151;
+  }
+
+  .searchinterface{
+    width: 98vw;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+  }
+  img{
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    object-fit:contain;
+   }
+
+   .journey{
+    padding: 30px;
+    padding-top: 0;
+    
+   }
+
+   .pay{
+    margin: 20px;
+   }
+
+   button{
+    border: 0;
+    border-radius: 5px;
+    height: 25px;
+    background-color: #bfbcbc;
+   }
+   button:hover{
+    
+    background-color: #6e6e6e;
+    color: #fffbfb;
+   }
+
+   .login{
+    height: 95vh;
+    width: 95vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   }
+
+   .card{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 400px;
+    width: 350px;
+    border: solid #000 1px;
+    border-radius: 15px;
+    
+   }
+   
+   .card input{
+    border: solid black 1px;
+    margin-left: 10px;
+    border-radius: 4px;
+   }
+
+   .loginbutton{
+    width: 80px;
+    height: 30px;
+    position: relative;
+    left: 80px;
+   }
+
+   .card h1{
+
+    position: relative;
+    bottom: 40px;
+   }
+
+   .card .log{
+    position: relative;
+    top: 0px;
+   }
+
+   .usernamepass{
+    position: relative;
+    top: 20px;
+   }
+
+   .falseuser{
+      color: rgb(253, 46, 46);
+      margin: 0;
+      font-size: small;
+   }
+
+   h3{
+    display: inline;
+   }

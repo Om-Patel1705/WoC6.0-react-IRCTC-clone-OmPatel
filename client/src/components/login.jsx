@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SignUp from "./signup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,Navigate} from "react-router-dom";
+import "./home.css"
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -26,6 +27,7 @@ const Login = () => {
        
         localStorage.setItem("token", data.token);
         localStorage.setItem("username", data.username);
+        localStorage.setItem("email", data.email);
 
         navigate("/home");
       } else {
@@ -43,12 +45,16 @@ const Login = () => {
   }
 
   if (redirectToSignUp) {
-    return <SignUp />;
+    navigate("/signup");
   }
 
   return (
-    <div className="container">
+    <div className="container login">
+    <div className="card">
+
+    <h1 className="log">Login</h1>
       <form>
+      <div className="usernamepass">
         <div>
           <label>Username:</label>
           <input
@@ -57,6 +63,7 @@ const Login = () => {
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
+        <br/>
         <div>
           <label>Password:</label>
           <input
@@ -65,18 +72,28 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="button" onClick={handleLogin}>
+        <br/>
+        <button type="button" className="loginbutton" onClick={handleLogin}>
           Login
-        </button>
+        </button></div>
+      
+        <br/>
+       
         <div>
+        <br/>
+        <br/>
+        
+        
           Don't have an account?
+          <br/>
+          
           <button type="button" onClick={handleSignup}>
             Sign Up
           </button>
         </div>
       </form>
-    </div>
+    </div></div>
   );
 };
 
-export default Login; // Exporting Login component and whoLoggedin state
+export default Login; 

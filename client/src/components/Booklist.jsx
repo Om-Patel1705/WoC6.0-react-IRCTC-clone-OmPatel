@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Header from "./Header";
+import "./home.css";
 
 async function fetchBookList(username) {
   const response = await fetch("http://localhost:8000/booklist", {
@@ -67,13 +69,14 @@ function Booklist() {
 
   return (
     <div>
+    <Header selected={'bookList'}/>
      { isEmpty==false && (
       <div>
         {
-          <ul>
+          <ul className="bookedTrainContainer">
             {bookList.map((book, index) => (
-              <li key={index}>
-                <ul>
+              <li key={index} >
+                <ul className="bookedTrains">
                   <li>Username: {book.username}</li>
                   <li>Date: {book.date}</li>
                   <li>Trainnumber: {book.trainnumber}</li>
@@ -82,7 +85,7 @@ function Booklist() {
                   <li> Departuretime: {book.departuretime}</li>
                   <li> Arrivaltime: {book.arrivaltime}</li>
                   <li>
-                    <button
+                    <button className="cancel"
                       onClick={() => {
                         cancelTicket(book.bookid);
                       }}

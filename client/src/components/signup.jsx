@@ -1,23 +1,21 @@
 import React, { useState } from "react";
+import "./home.css";
 
-import "./signup.css";
 import { useNavigate } from "react-router-dom";
-
-
-// import "bootstrap/dist/css/bootstrap.css";
-import { Button, Card } from "react-bootstrap";
 
 function SignUp() {
   const [isRegistered, setRegistered] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [falseuser, setFalseuser] = useState("");
+
   const navigate = useNavigate();
 
   async function handlechange() {
     if (username && password && email) {
       try {
-        await fetch("http://localhost:8000/signup", {
+        const statusOfSignUp = await fetch("http://localhost:8000/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -25,11 +23,21 @@ function SignUp() {
 
           body: JSON.stringify({ username, email, password }),
         });
-        setRegistered(true);
-        localStorage.removeItem('token');
-        localStorage.removeItem('username');
+
+        if (statusOfSignUp.ok) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("username");
+
+          const response = await statusOfSignUp.json();
+          localStorage.setItem("token", response.token);
+          localStorage.setItem("username", response.username);
+
+          setRegistered(true);
+        } else {
+          setFalseuser("Username is taken!😕");
+        }
       } catch (error) {
-        console.error("Error posting data", error);
+        console.log("Error posting data", error);
         alert("Error signing up");
       }
     } else {
@@ -46,35 +54,44 @@ function SignUp() {
   }
 
   return (
-    <>
-      <Card className="container signup">
-        <label>Email: </label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <br />
-        <label>Username: </label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <br />
-        <label>Password: </label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br />
-        <Button onClick={handlechange}>Sign up</Button>
+    <div className="container login">
+      <div className="card">
+        <h1 className="reg">Registration</h1>
+
+        <div>
+          <label>Email: </label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
 
         <br />
+        <div>
+          <label>Username: </label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        {falseuser && <p className="falseuser">{falseuser}</p>}
         <br />
-      </Card>
-    </>
+
+        <div>
+          <label>Password: </label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <br />
+        </div>
+        <br />
+        <button onClick={handlechange}>Sign up</button>
+      </div>
+    </div>
   );
 }
 
