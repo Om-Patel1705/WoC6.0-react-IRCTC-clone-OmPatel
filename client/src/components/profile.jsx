@@ -9,9 +9,9 @@ function Profile(){
 
  <Header selected={"profile"}></Header>
 
-   <h3>Username: </h3> {localStorage.getItem("email")}
+   <h3>Username: </h3> {localStorage.getItem("username")}
     <br/>
-    <h3>Email: </h3>{localStorage.getItem("username")}
+    <h3>Email: </h3>{localStorage.getItem("email")}
  </>);
     
 }

@@ -31,6 +31,7 @@ function SignUp() {
           const response = await statusOfSignUp.json();
           localStorage.setItem("token", response.token);
           localStorage.setItem("username", response.username);
+          localStorage.setItem("email", email);
 
           setRegistered(true);
         } else {
