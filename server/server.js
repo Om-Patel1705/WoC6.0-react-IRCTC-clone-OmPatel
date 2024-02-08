@@ -16,10 +16,10 @@ app.post("/signup", async (req, res) => {
   try {
     const hashedPassword = md5(password);
     console.log("($1, $2, $3)", [username, email, hashedPassword]);
-    // await pool.query(
-    //   "INSERT INTO user_data (username, email, password) VALUES ($1, $2, $3)",
-    //   [username, email, hashedPassword]
-    // );
+    await pool.query(
+      "INSERT INTO user_data (username, email, password) VALUES ($1, $2, $3)",
+      [username, email, hashedPassword]
+    );
     const token = jwt.sign({ username }, "HELLOWORLD", { expiresIn: "10" });
     res.status(200).json({ success: true , token ,username});
   } catch (err) {
@@ -75,7 +75,7 @@ app.post("/search", async (req, res) => {
       console.log(result.rows);
       res.json({ data: to });
     } else {
-      res.json({}); // or handle the case when no results are found
+      res.json({}); 
     }
   } catch (err) {
     console.error(err);
@@ -118,8 +118,8 @@ app.post("/booklist", async (req, res) => {
       res.json({});
     }
   } catch (err) {
-    console.log("YASH");
-    // console.error(err);
+   
+    console.error(err);
   }
 });
 app.post("/cancel", async (req, res) => {
