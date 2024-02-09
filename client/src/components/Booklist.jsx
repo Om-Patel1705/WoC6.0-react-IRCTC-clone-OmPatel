@@ -82,8 +82,7 @@ function Booklist() {
                   <li>Trainnumber: {book.trainnumber}</li>
                   <li>Source: {book.source}</li>
                   <li>Destination: {book.destination}</li>
-                  <li> Departuretime: {book.departuretime}</li>
-                  <li> Arrivaltime: {book.arrivaltime}</li>
+                  
                   <li>
                     <button className="cancel"
                       onClick={() => {
