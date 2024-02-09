@@ -39,7 +39,7 @@ useEffect(()=>{ if(showPaymentDetails)scrollToSection("paymentdetails"); },[show
   async function handleSearch() {
     try {
       console.log(date);
-      const response = await fetch("http://localhost:8000/search", {
+      const response = await fetch("https://irctc-woc.onrender.com/search", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

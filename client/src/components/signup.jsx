@@ -15,7 +15,7 @@ function SignUp() {
   async function handlechange() {
     if (username && password && email) {
       try {
-        const statusOfSignUp = await fetch("http://localhost:8000/signup", {
+        const statusOfSignUp = await fetch("https://irctc-woc.onrender.com/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
