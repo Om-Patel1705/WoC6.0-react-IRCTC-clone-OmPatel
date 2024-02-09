@@ -8,6 +8,8 @@ const jwt = require("jsonwebtoken");
 const port = 8000;
 const app = express();
 
+
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -34,8 +36,10 @@ app.post("/login", async (req, res) => {
 
   try {
     const result = await pool.query(
-      "SELECT * FROM user_data WHERE username = $1",
-      [username]
+       "SELECT * FROM user_data WHERE username = $1",
+     //'create table book(username text references user_data(username),tid integer references trains(tid), bookid serial primary key not null)'
+       [username]
+      //'ALTER TABLE user_data ADD CONSTRAINT uniquectm_const UNIQUE (username);'
     );
 
     console.log(result.rows);
