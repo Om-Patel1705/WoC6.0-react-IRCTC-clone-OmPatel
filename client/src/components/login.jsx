@@ -94,7 +94,7 @@ const Login = () => {
         </div>
         <br/>
         <button type="button" className="loginbutton" onClick={handleLogin}>
-          Login{loading && "ing..."}
+          Login{loading && "..."}
           
         </button>
         </div>
