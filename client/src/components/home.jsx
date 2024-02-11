@@ -17,9 +17,12 @@ function Home() {
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
   const [trainid, settrainid] = useState();
   const [notfound, setNotfound] = useState(false);
+  const[loading,setloading]=useState(false);
 
 
-useEffect(()=>{ if(searchResults)scrollToSection("searchresult");},[searchResults]);
+useEffect(()=>{ if(searchResults){
+  setloading(false);
+  scrollToSection("searchresult")};},[searchResults]);
 useEffect(()=>{ if(showPaymentDetails)scrollToSection("paymentdetails"); },[showPaymentDetails]);
 
   function handleShowPaymentDetails(tid) {
@@ -37,6 +40,7 @@ useEffect(()=>{ if(showPaymentDetails)scrollToSection("paymentdetails"); },[show
 }
 
   async function handleSearch() {
+    setloading(true);
     try {
       console.log(date);
       const response = await fetch("https://irctc-woc.onrender.com/search", {
@@ -55,10 +59,12 @@ useEffect(()=>{ if(showPaymentDetails)scrollToSection("paymentdetails"); },[show
 
         if (searchResults.length === 0) setNotfound(true);
       } else {
+        setloading(false);
         console.log("Error in fetching data");
       }
       
     } catch (error) {
+      setloading(false);
       console.error("Error:", error);
     }
     
@@ -148,20 +154,26 @@ useEffect(()=>{ if(showPaymentDetails)scrollToSection("paymentdetails"); },[show
           <br />
           <button className="search" onClick={handleSearch}>
           SEARCH
+
           </button>
+          <br/>
+          <br/>
+          {loading && <div className="loader"></div>}
           {searchResults.length > 0 && (
-            <div id="searchresult">
+            <div >
               <h2>Search Results</h2>
-              <ul>
-                {searchResults.map((result) => (
+              <ul id="searchresult">
+                {searchResults.map((result,index) => (
                   <div>
-                    <li key={result.tid}>
-                      Train Number: {result.trainnumber}, Source:{" "}
-                      {result.source}, Destination: {result.destination}
-                      <br />
-                      <button
-                        onClick={() => handleShowPaymentDetails(result.tid)}
-                      >
+                    <li className="searchresult" key={index}>
+
+                    <ul>
+                      <li><span>Train Number: </span>{result.trainnumber}</li>
+                      <li><span>Source: </span>{result.source}</li>
+                      <li><span>Destination: </span>{result.destination}</li>
+                    </ul>
+                      
+                      <button onClick={() => handleShowPaymentDetails(result.tid)}>
                        Book
                       </button>
                     </li>

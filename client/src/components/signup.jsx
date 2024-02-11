@@ -9,10 +9,13 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [falseuser, setFalseuser] = useState("");
+  const[loading,setloading]=useState(false);
 
   const navigate = useNavigate();
 
   async function handlechange() {
+    setloading(true);
+    
     if (username && password && email) {
       try {
         const statusOfSignUp = await fetch("https://irctc-woc.onrender.com/signup", {
@@ -20,7 +23,7 @@ function SignUp() {
           headers: {
             "Content-Type": "application/json",
           },
-
+          
           body: JSON.stringify({ username, email, password }),
         });
 
@@ -34,10 +37,13 @@ function SignUp() {
           localStorage.setItem("email", email);
 
           setRegistered(true);
+          
         } else {
           setFalseuser("Username is taken!😕");
+          setloading(false);
         }
       } catch (error) {
+        setloading(false);
         console.log("Error posting data", error);
         alert("Error signing up");
       }
@@ -48,14 +54,17 @@ function SignUp() {
 
   try {
     if (isRegistered) {
+      
       navigate("/home");
     }
   } catch (error) {
+    setloading(false);
     console.error("Error navigating", error);
   }
 
   return (
-    <div className="container login">
+    <div className="l container login">
+    <h1>Welcome to IRCTC</h1>
       <div className="card">
         <h1 className="reg">Registration</h1>
 
@@ -90,8 +99,8 @@ function SignUp() {
           <br />
         </div>
         <br />
-        <button onClick={handlechange}>Sign up</button>
-      </div>
+        <button className="signupbutton" onClick={handlechange}>Sign{loading && "ing"} up{loading && "..."}</button>
+         </div>
     </div>
   );
 }

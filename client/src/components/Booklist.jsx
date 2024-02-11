@@ -18,6 +18,7 @@ async function fetchBookList(username) {
 function Booklist() {
   const [bookList, setBookList] = useState([]);
   const [isEmpty, setIsempty] = useState(true);
+  const[loading,setloading]=useState(true);
 
   async function cancelTicket(tid) {
     try {
@@ -54,8 +55,10 @@ function Booklist() {
         
         if (data == null) {
           setIsempty(true);
+          setloading(false);
         } else {
           setIsempty(false);
+          setloading(false);
           setBookList(data);
         }
 
@@ -68,20 +71,22 @@ function Booklist() {
   }, []); // Empty dependency array means this effect runs once on mount
 
   return (
-    <div>
+    
+    <div id="temp">
     <Header selected={'bookList'}/>
-     { isEmpty==false && (
+
+    {loading ? <div className="booklistloader"> <div className="loader l2"></div></div> : <div>{ isEmpty==false && (
       <div>
         {
           <ul className="bookedTrainContainer">
             {bookList.map((book, index) => (
               <li key={index} >
                 <ul className="bookedTrains">
-                  <li>Username: {book.username}</li>
-                  <li>Date: {book.date}</li>
-                  <li>Trainnumber: {book.trainnumber}</li>
-                  <li>Source: {book.source}</li>
-                  <li>Destination: {book.destination}</li>
+                  <li><span>Username: </span>{book.username}</li>
+                  <li><span>Date: </span>{book.date}</li>
+                  <li><span>Trainnumber: </span>{book.trainnumber}</li>
+                  <li><span>Source: </span>{book.source}</li>
+                  <li><span>Destination: </span>{book.destination}</li>
                   
                   <li>
                     <button className="cancel"
@@ -100,8 +105,9 @@ function Booklist() {
           </ul>
         }
       </div>
-      ) }
-      {isEmpty==true && <h1>No Result</h1>}
+      ) }</div>}
+     
+      {isEmpty==true && loading==false && <h1>No Result</h1>}
     </div>
   );
 }

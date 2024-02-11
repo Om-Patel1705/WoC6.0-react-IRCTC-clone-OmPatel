@@ -52,11 +52,12 @@ function PayDetails({ log, tid }) {
   return (
 
     
-    <div>
+    <div className="paymentditails">
       <h2>Payment Details</h2>
       <form>
         <div className="pay">
           <label htmlFor="cardNumber">Card Number:</label>
+          <br/>
           <input
             type="text"
             id="cardNumber"
@@ -68,6 +69,7 @@ function PayDetails({ log, tid }) {
         
         <div className="pay">
           <label htmlFor="expirationMonth">Expiration Month:</label>
+          <br/>
           <input
             type="text"
             id="expirationMonth"
@@ -78,6 +80,7 @@ function PayDetails({ log, tid }) {
         </div>
         <div className="pay">
           <label htmlFor="expirationYear">Expiration Year:</label>
+          <br/>
           <input
             type="text"
             id="expirationYear"
@@ -88,6 +91,7 @@ function PayDetails({ log, tid }) {
         </div>
         <div className="pay">
           <label htmlFor="cvv">CVV:</label>
+          <br/>
           <input
             type="text"
             id="cvv"
@@ -98,6 +102,7 @@ function PayDetails({ log, tid }) {
         </div>
         <div className="pay">
           <label htmlFor="country">Country:</label>
+          <br/>
           <input
             type="text"
             id="country"
@@ -106,7 +111,8 @@ function PayDetails({ log, tid }) {
             placeholder="Enter country"
           />
         </div>
-        <button type="button" onClick={handlePaymentSubmit}>
+        <br/>
+        <button className="search" type="button" onClick={handlePaymentSubmit}>
           Submit Payment
         </button>
       </form>

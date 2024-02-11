@@ -7,10 +7,11 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [redirectToSignUp, setRedirectToSignUp] = useState(false);
- 
+  const[loading,setloading]=useState(false);
   const navigate = useNavigate();
 
   async function handleLogin() {
+    setloading(true);
     try {
       const response = await fetch("https://irctc-woc.onrender.com/login", {
         method: "POST",
@@ -31,10 +32,13 @@ const Login = () => {
 
         navigate("/home");
       } else {
+        setloading(false);
         console.error("Authentication failed:", data.message);
         alert("Check your password or username or signup");
       }
     } catch (error) {
+      
+      setloading(false);
       console.error("Error during login:", error);
     }
   }
@@ -49,7 +53,10 @@ const Login = () => {
   }
 
   return (
-    <div className="container login">
+
+    <>
+    <div className="l container login">
+    <h1>Welcome to IRCTC</h1>
     <div className="card">
 
     <h1 className="log">Login</h1>
@@ -74,8 +81,10 @@ const Login = () => {
         </div>
         <br/>
         <button type="button" className="loginbutton" onClick={handleLogin}>
-          Login
-        </button></div>
+          Login{loading && "ing..."}
+          
+        </button>
+        </div>
       
         <br/>
        
@@ -90,9 +99,11 @@ const Login = () => {
           <button type="button" onClick={handleSignup}>
             Sign Up
           </button>
+          
+
         </div>
       </form>
-    </div></div>
+    </div></div></>
   );
 };
 
