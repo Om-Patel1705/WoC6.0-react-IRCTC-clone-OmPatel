@@ -37,9 +37,8 @@ app.post("/login", async (req, res) => {
   try {
     const result = await pool.query(
        "SELECT * FROM user_data WHERE username = $1",
-     //'create table book(username text references user_data(username),tid integer references trains(tid), bookid serial primary key not null)'
        [username]
-      //'ALTER TABLE user_data ADD CONSTRAINT uniquectm_const UNIQUE (username);'
+
     );
 
     console.log(result.rows);
@@ -138,7 +137,8 @@ app.post("/cancel", async (req, res) => {
         console.log(tid);
 
         const result = await pool.query(
-          `SELECT * FROM book AS b JOIN trains AS t ON b.tid=t.tid WHERE b.username='${username}'`
+          `SELECT b.*,t.trainnumber,t.source,t.destination FROM book AS b JOIN trains AS t ON b.tid=t.tid WHERE b.username='${username}'`
+
         );
         if (result.rows.length > 0) {
           const to = result.rows;
