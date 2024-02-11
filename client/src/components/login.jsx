@@ -88,8 +88,8 @@ const Login = () => {
           id="forenter"
             type="password"
             value={password}
-            onKeyPress={handleKeyPress}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={handleKeyPress}
           />
         </div>
         <br/>
