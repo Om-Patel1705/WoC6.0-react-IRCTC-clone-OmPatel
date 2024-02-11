@@ -68,7 +68,7 @@ function Booklist() {
     };
 
     fetchData();
-  }, []); // Empty dependency array means this effect runs once on mount
+  }, []); 
 
   return (
     

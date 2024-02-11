@@ -96,11 +96,13 @@ app.get("/test", async (req, res) => {
 });
 
 app.post("/book", async (req, res) => {
-  const { tid, log } = req.body;
+  const { tid, log ,date} = req.body;
   try {
+    const tdate = date.substring(0, 10);
     console.log(log);
     console.log(tid);
-    await pool.query("INSERT INTO book VALUES ($1, $2)", [log, tid]);
+    console.log(tdate);
+    await pool.query("INSERT INTO book (username,tid,date) VALUES ($1, $2 , $3)", [log, tid , tdate]);
     res.status(200).json({ success: true });
   } catch (err) {
     console.error(err);
@@ -112,7 +114,7 @@ app.post("/booklist", async (req, res) => {
    console.log(username);
   try {
     const result = await pool.query(
-      `SELECT * FROM book AS b JOIN trains AS t ON b.tid=t.tid WHERE b.username='${username}'`
+      `SELECT b.*,t.trainnumber,t.source,t.destination FROM book AS b JOIN trains AS t ON b.tid=t.tid WHERE b.username='${username}'`
     );
     if (result.rows.length > 0) {
       const to = result.rows;

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './home.css'
 
 
-function PayDetails({ log, tid }) {
+function PayDetails({ log, tid ,date}) {
   const [cardNumber, setCardNumber] = useState("");
   const [expirationMonth, setExpirationMonth] = useState("");
   const [expirationYear, setExpirationYear] = useState("");
@@ -16,6 +16,8 @@ function PayDetails({ log, tid }) {
   async function handlePaymentSubmit() {
     console.log(log);
     console.log(tid);
+    console.log(date);
+    
     console.log("Payment submitted:", {
       cardNumber,
       expirationMonth,
@@ -24,12 +26,13 @@ function PayDetails({ log, tid }) {
       country,
     });
     try {
-      const response = await fetch("https://irctc-woc.onrender.com/book", {
+       const response = await fetch("https://irctc-woc.onrender.com/book", {
+        //const response = await fetch("http://localhost:8000/book", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ tid, log }),
+        body: JSON.stringify({ tid, log , date}),
       });
       if (response.ok) {
         console.log("Train booked");

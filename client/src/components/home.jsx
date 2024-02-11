@@ -190,7 +190,7 @@ useEffect(()=>{ if(showPaymentDetails)scrollToSection("paymentdetails"); },[show
         </div>
       </div>
       <div id="paymentdetails">
-        {showPaymentDetails && <PayDetails tid={trainid} log={name} />}
+        {showPaymentDetails && <PayDetails tid={trainid} log={name} date={date}/>}
         <br />
       </div>
       <br />
