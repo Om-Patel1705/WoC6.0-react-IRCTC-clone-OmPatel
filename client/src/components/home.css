@@ -171,8 +171,8 @@ button:hover {
   flex-direction: column;
   height: 400px;
   width: 350px;
-  border: solid #000 1px;
   border-radius: 15px;
+  background-color: #97c7fa2d;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
 
 }
@@ -194,10 +194,7 @@ button:hover {
     width: 100px;
    } */
 
-.card h1 {
-  position: relative;
-  bottom: 40px;
-}
+
 
 .card .log {
   position: relative;

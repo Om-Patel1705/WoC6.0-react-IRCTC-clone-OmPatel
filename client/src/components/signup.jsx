@@ -9,23 +9,26 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [falseuser, setFalseuser] = useState("");
-  const[loading,setloading]=useState(false);
+  const [loading, setloading] = useState(false);
 
   const navigate = useNavigate();
 
   async function handlechange() {
     setloading(true);
-    
+
     if (username && password && email) {
       try {
-        const statusOfSignUp = await fetch("https://irctc-woc.onrender.com/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          
-          body: JSON.stringify({ username, email, password }),
-        });
+        const statusOfSignUp = await fetch(
+          "https://irctc-woc.onrender.com/signup",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+
+            body: JSON.stringify({ username, email, password }),
+          }
+        );
 
         if (statusOfSignUp.ok) {
           localStorage.removeItem("token");
@@ -37,7 +40,6 @@ function SignUp() {
           localStorage.setItem("email", email);
 
           setRegistered(true);
-          
         } else {
           setFalseuser("Username is taken!😕");
           setloading(false);
@@ -48,13 +50,13 @@ function SignUp() {
         alert("Error signing up");
       }
     } else {
+      setloading(false);
       alert("Please enter all required information");
     }
   }
 
   try {
     if (isRegistered) {
-      
       navigate("/home");
     }
   } catch (error) {
@@ -64,12 +66,13 @@ function SignUp() {
 
   return (
     <div className="l container login">
-    <h1>Welcome to IRCTC</h1>
+      <h1>Welcome to IRCTC</h1>
       <div className="card">
         <h1 className="reg">Registration</h1>
 
         <div>
           <label>Email: </label>
+          <br />
           <input
             type="email"
             value={email}
@@ -80,6 +83,8 @@ function SignUp() {
         <br />
         <div>
           <label>Username: </label>
+          <br />
+
           <input
             type="text"
             value={username}
@@ -91,6 +96,8 @@ function SignUp() {
 
         <div>
           <label>Password: </label>
+          <br />
+
           <input
             type="password"
             value={password}
@@ -99,8 +106,10 @@ function SignUp() {
           <br />
         </div>
         <br />
-        <button className="signupbutton" onClick={handlechange}>Sign{loading && "ing"} up{loading && "..."}</button>
-         </div>
+        <button className="signupbutton" onClick={handlechange}>
+          Sign{loading && "ing"} up{loading && "..."}
+        </button>
+      </div>
     </div>
   );
 }
