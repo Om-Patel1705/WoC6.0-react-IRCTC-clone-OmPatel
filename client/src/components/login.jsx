@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SignUp from "./signup";
 import { useNavigate ,Navigate} from "react-router-dom";
 import "./home.css"
@@ -52,6 +52,16 @@ const Login = () => {
     navigate("/signup");
   }
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleLogin();
+    }
+  };
+  
+  
+
+
   return (
 
     <>
@@ -75,8 +85,10 @@ const Login = () => {
         <div>
           <label>Password:</label>
           <input
+          id="forenter"
             type="password"
             value={password}
+            onKeyPress={handleKeyPress}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>

@@ -64,6 +64,17 @@ function SignUp() {
     console.error("Error navigating", error);
   }
 
+
+  function handleKeyPress(event){
+    if(event.key==="Enter"){
+      event.preventDefault();
+      handlechange();
+    }
+
+  }
+
+  
+
   return (
     <div className="l container login">
       <h1>Welcome to IRCTC</h1>
@@ -102,6 +113,7 @@ function SignUp() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyPress={handleKeyPress}
           />
           <br />
         </div>
