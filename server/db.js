@@ -21,4 +21,35 @@ pool.connect()
     process.exit(1); // Exit the application on connection error
   });
 
+
+try {
+  const response = pool.query(`CREATE TABLE user_data(
+	id serial primary key,
+	email text,
+	password text,
+	username text
+);
+
+CREATE TABLE trains(
+	tid serial primary key,
+	trainnumber text,
+	source text,
+	destination text,
+	departuretime text,
+	arrivaltime text,
+	stops text[],
+	date date
+);
+
+CREATE TABLE book(
+	username text,
+	tid integer,
+	bookid integer primary key
+);`);
+
+if(response.ok)console.log("Tables Successfully created.");
+} catch (err) {
+  console.log("Tables already exists.");
+}
+
 module.exports = pool;
