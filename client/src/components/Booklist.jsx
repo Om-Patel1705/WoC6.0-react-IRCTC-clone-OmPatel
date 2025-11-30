@@ -3,7 +3,7 @@ import Header from "./Header";
 import "./home.css";
 
 async function fetchBookList(username) {
-  const response = await fetch("https://irctc-woc.onrender.com/booklist", {
+  const response = await fetch("http://localhost:8000/booklist", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -24,7 +24,7 @@ function Booklist() {
     try {
       const username = localStorage.getItem("username");
 
-      const response = await fetch("https://irctc-woc.onrender.com/cancel", {
+      const response = await fetch("http://localhost:8000/cancel", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

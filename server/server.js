@@ -62,17 +62,17 @@ app.post("/search", async (req, res) => {
   var { source, destination, date } = req.body;
   var tdate;
   // if (date != null) tdate = date.substring(0, 10);
-  tdate="2023-12-31";
+  tdate='2023-12-31';
   source = "Mumbai";
   destination="Delhi";
 
   try {
-    console.log(tdate);
     const result = await pool.query(
       "SELECT * FROM trains WHERE source = $1 AND destination = $2 AND date = $3",
       [source, destination, tdate]
     );
-
+    
+    console.log(result.rows);
     if (result.rows.length > 0) {
       const to = result.rows;
       console.log(result.rows);
@@ -101,7 +101,10 @@ app.post("/book", async (req, res) => {
     console.log(log);
     console.log(tid);
     console.log(tdate);
-    await pool.query("INSERT INTO book (username,tid,date) VALUES ($1, $2 , $3)", [log, tid , tdate]);
+await pool.query(
+  "INSERT INTO book (username,tid,date) VALUES ($1, $2, $3)",
+  [log, tid, tdate]
+);
     res.status(200).json({ success: true });
   } catch (err) {
     console.error(err);

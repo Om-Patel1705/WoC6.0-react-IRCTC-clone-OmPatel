@@ -43,7 +43,7 @@ useEffect(()=>{ if(showPaymentDetails)scrollToSection("paymentdetails"); },[show
     setloading(true);
     try {
       console.log(date);
-      const response = await fetch("https://irctc-woc.onrender.com/search", {
+      const response = await fetch("http://localhost:8000/search", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -19,7 +19,7 @@ function SignUp() {
     if (username && password && email) {
       try {
         const statusOfSignUp = await fetch(
-          "https://irctc-woc.onrender.com/signup",
+          "http://localhost:8000/signup",
           {
             method: "POST",
             headers: {

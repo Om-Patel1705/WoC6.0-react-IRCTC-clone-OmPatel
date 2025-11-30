@@ -26,7 +26,7 @@ function PayDetails({ log, tid ,date}) {
       country,
     });
     try {
-       const response = await fetch("https://irctc-woc.onrender.com/book", {
+       const response = await fetch("http://localhost:8000/book", {
         //const response = await fetch("http://localhost:8000/book", {
         method: "POST",
         headers: {
