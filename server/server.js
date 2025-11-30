@@ -8,9 +8,14 @@ const jwt = require("jsonwebtoken");
 const port = 3001;
 const app = express();
 
+app.use(cors({
+  origin: "*",
+  methods: "GET,POST,PUT,DELETE,OPTIONS",
+  allowedHeaders: "Content-Type, Authorization"
+}));
 
+app.options("*", cors()); // handle preflight
 
-app.use(cors());
 app.use(bodyParser.json());
 
 app.post("/signup", async (req, res) => {
